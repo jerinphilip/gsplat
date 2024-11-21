@@ -46,7 +46,7 @@ def get_extensions():
     if sys.platform == "win32":
         define_macros += [("gsplat_EXPORTS", None)]
 
-    extra_compile_args = {"cxx": ["-O3"]}
+    extra_compile_args = {"cxx": ["-O3", "-DGLOG_USE_GLOG_EXPORT"]}
     if not os.name == "nt":  # Not on Windows:
         extra_compile_args["cxx"] += ["-Wno-sign-compare"]
     extra_link_args = [] if WITH_SYMBOLS else ["-s"]
@@ -72,7 +72,7 @@ def get_extensions():
 
     nvcc_flags = os.getenv("NVCC_FLAGS", "")
     nvcc_flags = [] if nvcc_flags == "" else nvcc_flags.split(" ")
-    nvcc_flags += ["-O3", "--use_fast_math"]
+    nvcc_flags += ["-O3", "--use_fast_math", "-DGLOG_USE_GLOG_EXPORT"]
     if LINE_INFO:
         nvcc_flags += ["-lineinfo"]
     if torch.version.hip:
